@@ -1,0 +1,6 @@
+name: chat-system-plugin
+version: '1.0-SNAPSHOT'
+main: org.example.com.chatSystemPlugin.Main
+api-version: '1.21'
+authors: [ Tiziano ]
+description: Make potions without visible particles
