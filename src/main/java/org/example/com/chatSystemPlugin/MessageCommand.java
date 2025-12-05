@@ -8,46 +8,55 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class MessageCommand implements CommandExecutor {
-    
+
     private Main main;
+    private boolean ChatMySelf;
+
     public MessageCommand(Main main) {
         this.main = main;
+        ChatMySelf = main.getConfig().getBoolean("ChatMySelf");
     }
-    
+
+
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (!(commandSender instanceof Player)) return false;
-        
-        Player  player = (Player) commandSender;
-        
+
+        Player player = (Player) commandSender;
+
         if(strings.length >= 2)
         {
             if (Bukkit.getPlayerExact(strings[0]) != null)
             {
                 Player target = Bukkit.getPlayerExact(strings[0]);
+
+                if(target.equals(player) && !ChatMySelf){
+                    player.sendMessage(ChatColor.RED + "You can't chat your self!");
+                    return true;
+                }
+
                 StringBuilder builder = new StringBuilder();
                 
                 for (int i = 1; i < strings.length; i++)
                 {
                     builder.append(strings[i]).append(" ");
                 }
+
+                player.sendMessage(ChatColor.GRAY + "You -> " + target.getName() + ": " + builder);
+                target.sendMessage(ChatColor.GREEN + player.getName() + " -> " + builder);
                 
-                player.sendMessage(ChatColor.GRAY + "You -> " + target.getName() + ": " + builder.toString());
-                target.sendMessage(ChatColor.GREEN + player.getName() + " -> " + builder.toString());
-                
-                main.getRecentMessage().put(player.getUniqueId(), target.getUniqueId());
+                main.getRecentMessage().put(target.getUniqueId(), player.getUniqueId());
             }
             else
             {
                 player.sendMessage(ChatColor.RED + "Player not found!");
             }
-        
         }
         else
         {
             player.sendMessage(ChatColor.RED + "Invalid arguments! Use /message <player> <message>.");
         }
         
-        return false;
+        return true;
     }
 }
