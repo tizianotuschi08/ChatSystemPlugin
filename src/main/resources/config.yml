@@ -1,0 +1,16 @@
+#########################################
+#     This is my ChatSystemPlugin       #
+#    This plugin is basic and you       #
+# can manage a chat simple chat-system  #
+#           for your server.            #
+#       Version 1.1.0 - 1.21.8          #
+#           By tittofresh               #
+#########################################
+
+# Choose whether to allow players to message themselves
+ChatMySelf: false
+
+# Allow the person who sent /message to reply if they get a response
+AllowReply: true
+
+# Coming soon...

@@ -16,7 +16,9 @@ public final class Main extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
-        
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
+
         getCommand("message").setExecutor(new MessageCommand(this));
         getCommand("reply").setExecutor(new ReplyCommand(this));
         
